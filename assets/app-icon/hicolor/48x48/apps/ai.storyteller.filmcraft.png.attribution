@@ -1,8 +1,8 @@
 asset:        ai.storyteller.filmcraft.png
-title:        Estudio Marketographer app icon, Linux hicolor theme 48 px
-author:       Estudio Marketographer (original work for this fork)
-source:       original work (drawn in code for Estudio Marketographer, rendered with resvg)
-license:      MIT OR Apache-2.0
+title:        Estudio Marketographer app icon (brand camera mark), Linux hicolor theme 48 px
+author:       Pablo Villarroel / The Marketographer (brand asset)
+source:       brand camera mark, white on black, from The Marketographer brand folder (Nuevas Portadas Nas 2026)
+license:      LicenseRef-Marketographer-Brand (all rights reserved; brand asset, not open source)
 license-file: assets/app-icon/LICENSE.txt
 added:        2026-11-05 by Claude (agent) for Estudio Marketographer
-notes:        Drawn in code as SVG for Estudio Marketographer; rendered by packaging/icons.sh. See assets/app-icon/README.md.
+notes:        Brand camera mark from The Marketographer's own brand folder, used as the app icon of Estudio Marketographer. Not covered by the MIT OR Apache-2.0 code licence.
