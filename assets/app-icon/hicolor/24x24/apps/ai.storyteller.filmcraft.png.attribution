@@ -1,8 +1,8 @@
 asset:        ai.storyteller.filmcraft.png
-title:        FilmCraft app icon, Linux hicolor theme 24 px
-author:       Brandon Thomas (FilmCraft owner), for the FilmCraft project
-source:       original work (drawn by the owner in ArtCraft, then vectorised)
+title:        Estudio Marketographer app icon, Linux hicolor theme 24 px
+author:       Estudio Marketographer (original work for this fork)
+source:       original work (drawn in code for Estudio Marketographer, rendered with resvg)
 license:      MIT OR Apache-2.0
 license-file: assets/app-icon/LICENSE.txt
-added:        2026-10-02 by Claude (agent) for Brandon Thomas
-notes:        Rendered from filmcraft.svg with resvg by packaging/icons.sh.
+added:        2026-11-05 by Claude (agent) for Estudio Marketographer
+notes:        Drawn in code as SVG for Estudio Marketographer; rendered by packaging/icons.sh. See assets/app-icon/README.md.
