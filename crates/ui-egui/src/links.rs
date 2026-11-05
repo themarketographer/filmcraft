@@ -110,7 +110,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn urls_follow_the_artcraft_scheme() {
+    fn urls_point_to_the_original_repository() {
         assert_eq!(GITHUB, "https://github.com/storytold/filmcraft");
         assert!(ALL.iter().all(|(id, _, u)| id.starts_with("help.") && u.starts_with("https://")));
         assert_eq!(url_for("help.github"), Some(GITHUB));

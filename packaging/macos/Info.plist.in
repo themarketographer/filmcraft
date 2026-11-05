@@ -62,7 +62,7 @@
       <string>Owner</string>
       <key>LSItemContentTypes</key>
       <array>
-        <string>ai.storyteller.filmcraft.project</string>
+        <string>com.themarketographer.estudio.project</string>
       </array>
     </dict>
   </array>
@@ -72,7 +72,7 @@
   <array>
     <dict>
       <key>UTTypeIdentifier</key>
-      <string>ai.storyteller.filmcraft.project</string>
+      <string>com.themarketographer.estudio.project</string>
       <key>UTTypeDescription</key>
       <string>FilmCraft Project</string>
       <key>UTTypeConformsTo</key>
