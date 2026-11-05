@@ -1,11 +1,17 @@
+Estudio Marketographer
+Copyright (c) 2026 The Marketographer (fork and modifications).
+
+This is a modified version of FilmCraft. The original work is:
+
 FilmCraft
 Copyright (c) 2026 ArtCraft Team and the FilmCraft contributors.
 Licensed under the MIT License or the Apache License, Version 2.0, at your option
-(LICENSE-MIT, LICENSE-APACHE).
+(LICENSE-MIT, LICENSE-APACHE). The original source is at https://github.com/storytold/filmcraft.
 
-The ArtCraft name, wordmark and logos in docs/brand/ are trademarks of the ArtCraft Team. They are
-not open source and are not covered by the license above; their terms are in
-docs/brand/LICENSE-brand.txt.
+Changes in this version: removed the ArtCraft name, wordmark and logos (they are trademarks of
+the ArtCraft Team and are not licensed here), removed links to ArtCraft's website and Discord,
+renamed the application, and replaced the application icon. This version is not made, endorsed
+or supported by the ArtCraft Team.
 
 Third-party material
 

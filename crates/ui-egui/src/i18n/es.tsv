@@ -14,7 +14,7 @@
 # way. Product and technology names (FilmCraft, ArtCraft, Lumetri, ProRes, LUFS…) keep their
 # spelling. "video" is written without an accent, as in the rest of this catalog.
 
-	About FilmCraft	Acerca de FilmCraft
+	About Estudio Marketographer	Acerca de Estudio Marketographer
 	Add Audio Submix Track	Añadir pista de submezcla de audio
 	Add Caption at Playhead	Añadir subtítulo en el cabezal
 	Add Chapter Marker…	Añadir marcador de capítulo…
@@ -40,7 +40,6 @@
 	Apply Default Transitions to Selection	Aplicar transiciones predeterminadas a la selección
 	Apply Video Transition	Aplicar transición de video
 	Arrange	Organizar
-	ArtCraft Website	Sitio web de ArtCraft
 	Assembly	Ensamblaje
 	Attach Proxies…	Adjuntar proxies…
 	Audio Channels…	Canales de audio…
@@ -133,9 +132,8 @@
 	File	Archivo
 	File…	Archivo…
 	Fill frame	Rellenar fotograma
-	FilmCraft Help…	Ayuda de FilmCraft…
+	Estudio Marketographer Help…	Ayuda de Estudio Marketographer…
 	FilmCraft on GitHub	FilmCraft en GitHub
-	FilmCraft on getartcraft.com	FilmCraft en getartcraft.com
 	Find Next	Buscar siguiente
 	Find…	Buscar…
 	Fit	Ajustar
@@ -179,7 +177,6 @@
 	Insert Frame Hold Segment	Insertar segmento de fotograma congelado
 	Install Motion Graphics Template…	Instalar plantilla de animación…
 	Interpret Footage…	Interpretar material…
-	Join the ArtCraft Discord…	Únete al Discord de ArtCraft…
 	Keyboard Shortcuts…	Atajos de teclado…
 	Label	Etiqueta
 	Labels…	Etiquetas…
@@ -374,7 +371,6 @@
 	Master volume: use the Audio Track Mixer	Volumen maestro: usa el mezclador de pistas de audio
 	Search	Buscar
 	Quick Export	Exportación rápida
-	Join the ArtCraft Discord (discord.gg/artcraft)	Únete al Discord de ArtCraft (discord.gg/artcraft)
 	Cancel	Cancelar
 	OK	Aceptar
 	Interpret Footage	Interpretar material
@@ -417,8 +413,6 @@
 	Delete Caption Track	Eliminar pista de subtítulos
 	Delete Empty Caption Tracks	Eliminar pistas de subtítulos vacías
 	Version {version}	Versión {version}
-	A clean-room, pure-Rust non-linear video editor. Part of the ArtCraft family.	Un editor de video no lineal en Rust puro, desarrollado en sala limpia. Parte de la familia ArtCraft.
-	Join the ArtCraft Discord	Únete al Discord de ArtCraft
 	Source code on GitHub	Código fuente en GitHub
 	Report an issue	Informar de un problema
 	MIT OR Apache-2.0. Fonts: Inter, Noto Serif and JetBrains Mono (SIL OFL 1.1).	MIT OR Apache-2.0. Fuentes: Inter, Noto Serif y JetBrains Mono (SIL OFL 1.1).
@@ -438,8 +432,8 @@
 	No background jobs.	No hay tareas en segundo plano.
 	Recover Unsaved Changes	Recuperar cambios no guardados
 	Untitled	Sin título
-	FilmCraft was closed while “{name}” had unsaved changes.	FilmCraft se cerró mientras “{name}” tenía cambios sin guardar.
-	FilmCraft quit unexpectedly while “{name}” had unsaved changes.	FilmCraft se cerró de forma inesperada mientras “{name}” tenía cambios sin guardar.
+	Estudio Marketographer was closed while “{name}” had unsaved changes.	Estudio Marketographer se cerró mientras “{name}” tenía cambios sin guardar.
+	Estudio Marketographer quit unexpectedly while “{name}” had unsaved changes.	Estudio Marketographer se cerró de forma inesperada mientras “{name}” tenía cambios sin guardar.
 	Recover unsaved changes from {when}?	¿Recuperar los cambios no guardados de {when}?
 	The project had not been saved yet.	El proyecto aún no se había guardado.
 	{n} sessions have unsaved changes:	{n} sesiones tienen cambios sin guardar:
@@ -459,7 +453,6 @@
 	Bars and Tone	Barras y tono
 	SMPTE HD bars with 1 kHz reference tone	Barras SMPTE HD con tono de referencia de 1 kHz
 	Community	Comunidad
-	Join us on Discord	Únete a nosotros en Discord
 	OMF Export Settings	Ajustes de exportación OMF
 	AAF Export Settings	Ajustes de exportación AAF
 	OMF Title:	Título OMF:
@@ -966,7 +959,7 @@
 	Font family	Familia de fuentes
 	Label Colors	Colores de etiqueta
 	Decoded frames held for the monitors and thumbnails: {used} of {budget}.	Fotogramas descodificados en memoria para los monitores y miniaturas: {used} de {budget}.
-	FilmCraft keeps the rest of the RAM free for other applications.	FilmCraft deja el resto de la RAM libre para otras aplicaciones.
+	Estudio Marketographer keeps the rest of the RAM free for other applications.	Estudio Marketographer deja el resto de la RAM libre para otras aplicaciones.
 	not available in this session	no disponible en esta sesión
 	Currently: {loc} — {files} file(s), {size}	Actualmente: {loc} — {files} archivo(s), {size}
 	 ({ch} output channels)	 ({ch} canales de salida)
@@ -1087,7 +1080,7 @@
 	Export As Motion Graphics Template	Exportar como plantilla de animación
 	Category:	Categoría:
 	Editable properties:	Propiedades editables:
-	Saved as a FilmCraft graphics template (.fcgt) in your templates folder.	Se guarda como plantilla de gráficos de FilmCraft (.fcgt) en tu carpeta de plantillas.
+	Saved as a Estudio Marketographer graphics template (.fcgt) in your templates folder.	Se guarda como plantilla de gráficos de Estudio Marketographer (.fcgt) en tu carpeta de plantillas.
 	Exported graphics template to {path}	Plantilla de gráficos exportada a {path}
 	Replace Fonts in Projects	Reemplazar fuentes en proyectos
 	Fonts used in the project:	Fuentes usadas en el proyecto:
@@ -2889,7 +2882,7 @@
 	Start Queue	Iniciar cola
 	Stop	Detener
 	Clear Finished	Borrar terminadas
-	Not supported by FilmCraft's encoders yet	Los codificadores de FilmCraft aún no lo admiten
+	Not supported by Estudio Marketographer's encoders yet	Los codificadores de Estudio Marketographer aún no lo admiten
 	Sequence name	Nombre de la secuencia
 	Folder	Carpeta
 	Preset	Ajuste preestablecido
@@ -2979,7 +2972,7 @@
 	Drag a clip to slide it between its neighbours.	Arrastra un clip para deslizarlo entre sus vecinos.
 	Drag to scroll the timeline.	Arrastra para desplazar la línea de tiempo.
 	Click to zoom in; Opt-click to zoom out.	Haz clic para acercar; Opción+clic para alejar.
-	FilmCraft hit an error	FilmCraft ha encontrado un error
+	Estudio Marketographer hit an error	Estudio Marketographer ha encontrado un error
 	Details: {path}	Detalles: {path}
 	Opened {url}	Abierto {url}
 	(empty)	(vacío)
@@ -3239,7 +3232,7 @@
 	QuickTime, ProRes 4444 (4:4:4) with alpha channel, 24-bit 48 kHz PCM	QuickTime, ProRes 4444 (4:4:4) con canal alfa, PCM de 24 bits y 48 kHz
 	QuickTime, ProRes 4444 XQ (4:4:4), 24-bit 48 kHz PCM	QuickTime, ProRes 4444 XQ (4:4:4), PCM de 24 bits y 48 kHz
 	QuickTime, ProRes 422, 24-bit 48 kHz PCM	QuickTime, ProRes 422, PCM de 24 bits y 48 kHz
-	Quit FilmCraft	Salir de FilmCraft
+	Quit Estudio Marketographer	Salir de Estudio Marketographer
 	Rate Stretch Tool	Herramienta Ajuste de velocidad
 	Razor Tool	Herramienta Cuchilla
 	Rectangle Tool	Herramienta Rectángulo
@@ -3541,7 +3534,7 @@
 	Auto Tone Map Media (HDR and log into SDR)	Mapeo de tonos automático de medios (HDR y log a SDR)
 	Configure…	Configurar…
 	Not supported in FilmCraft yet	FilmCraft aún no lo admite
-	FilmCraft always composites in linear light	FilmCraft siempre compone en luz lineal
+	Estudio Marketographer always composites in linear light	Estudio Marketographer siempre compone en luz lineal
 	Loop marked range	Bucle del intervalo marcado
 	Play Source	Reproducir origen
 	Source Play/Stop	Reproducir/Detener origen
@@ -3607,6 +3600,7 @@
 	Opens in your web browser: {url}	Se abre en el navegador web: {url}
 	Saves this session's log and shows it in your file manager.	Guarda el registro de esta sesión y lo muestra en el explorador de archivos.
 	Shows a report on this computer.	Muestra un informe sobre este equipo.
-	Shows the version, community links and credits in a FilmCraft window.	Muestra la versión, los enlaces de la comunidad y los créditos en una ventana de FilmCraft.
+	Shows the version, community links and credits in a Estudio Marketographer window.	Muestra la versión, los enlaces de la comunidad y los créditos en una ventana de Estudio Marketographer.
 	Couldn't open your web browser	No se pudo abrir el navegador web
 	Open this address in your browser yourself:	Abre esta dirección tú mismo en el navegador:
+	A modified version of FilmCraft, by the ArtCraft team, based on its open-source code.	Versión modificada de FilmCraft, del equipo de ArtCraft, basada en su código abierto.

@@ -30,7 +30,6 @@ macro_rules! tlf {
 }
 
 pub mod automation;
-pub mod brand;
 pub mod calc;
 mod cjk;
 pub mod control;
@@ -1928,13 +1927,13 @@ impl FilmcraftApp {
 }
 
 impl FilmcraftApp {
-    /// The "FilmCraft hit an error" window after a caught UI panic. Automation ids:
+    /// The "Estudio Marketographer hit an error" window after a caught UI panic. Automation ids:
     /// `error.dismiss`, `error.save`.
     fn error_window(&mut self, ctx: &egui::Context) {
         let Some(msg) = self.ui_error.clone() else { return };
         let mut close = false;
-        egui::Window::new(tl!("FilmCraft hit an error"))
-            .id(egui::Id::new("FilmCraft hit an error"))
+        egui::Window::new(tl!("Estudio Marketographer hit an error"))
+            .id(egui::Id::new("Estudio Marketographer hit an error"))
             .collapsible(false)
             .resizable(false)
             .pivot(egui::Align2::CENTER_CENTER)

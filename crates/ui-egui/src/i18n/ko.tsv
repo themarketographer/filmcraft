@@ -62,7 +62,6 @@
 	59.94 fps Drop-Frame	59.94 fps 드롭 프레임
 	59.94 fps Non Drop-Frame	59.94 fps 논드롭 프레임
 	A boxed label with a round pointer; move the label and the pointer follows.	둥근 포인터가 있는 상자 레이블. 레이블을 옮기면 포인터가 따라갑니다.
-	A clean-room, pure-Rust non-linear video editor. Part of the ArtCraft family.	클린룸 방식의 순수 Rust 비선형 비디오 편집기. ArtCraft 제품군의 일부입니다.
 	A cut sequence with transitions, effects and music	전환, 효과, 음악이 포함된 편집 시퀀스
 	A file dialog is already open	파일 대화상자가 이미 열려 있습니다
 	A news-style line that crawls in from the right and leaves at the left.	오른쪽에서 흘러 들어와 왼쪽으로 사라지는 뉴스형 자막.
@@ -73,7 +72,7 @@
 	AAF Export Settings	AAF 내보내기 설정
 	AAF…	AAF…
 	About	정보
-	About FilmCraft	FilmCraft 정보
+	About Estudio Marketographer	Estudio Marketographer 정보
 	Accent Color	강조 색상
 	Accessible color contrast	접근성 색상 대비
 	Action and Title Safe Areas	액션 및 제목 안전 영역
@@ -231,7 +230,6 @@
 	APV 422-12	APV 422-12
 	Are you sure you want to discard your changes to '{file}'?	'{file}'의 변경 사항을 버릴까요?
 	Arrange	배치
-	ArtCraft Website	ArtCraft 웹사이트
 	ASC CDL	ASC CDL
 	Aspect	종횡비
 	Assembly	어셈블리
@@ -1157,16 +1155,15 @@
 	Film Dissolve (Legacy)	필름 디졸브(레거시)
 	Film Emulation	필름 에뮬레이션
 	Film Roll	필름 롤
-	FilmCraft always composites in linear light	FilmCraft는 항상 선형 광원으로 합성합니다
+	Estudio Marketographer always composites in linear light	Estudio Marketographer는 항상 선형 광원으로 합성합니다
 	FilmCraft Graphics Template	FilmCraft 그래픽 템플릿
-	FilmCraft Help…	FilmCraft 도움말…
-	FilmCraft hit an error	FilmCraft 오류 발생
-	FilmCraft keeps the rest of the RAM free for other applications.	FilmCraft는 나머지 RAM을 다른 앱용으로 비워 둡니다.
-	FilmCraft on getartcraft.com	getartcraft.com의 FilmCraft
+	Estudio Marketographer Help…	Estudio Marketographer 도움말…
+	Estudio Marketographer hit an error	Estudio Marketographer 오류 발생
+	Estudio Marketographer keeps the rest of the RAM free for other applications.	Estudio Marketographer는 나머지 RAM을 다른 앱용으로 비워 둡니다.
 	FilmCraft on GitHub	GitHub의 FilmCraft
 	FilmCraft Project	FilmCraft 프로젝트
-	FilmCraft quit unexpectedly while “{name}” had unsaved changes.	“{name}”의 변경 사항을 저장하지 않은 채 FilmCraft가 비정상 종료되었습니다.
-	FilmCraft was closed while “{name}” had unsaved changes.	“{name}”의 변경 사항을 저장하지 않은 채 FilmCraft가 닫혔습니다.
+	Estudio Marketographer quit unexpectedly while “{name}” had unsaved changes.	“{name}”의 변경 사항을 저장하지 않은 채 Estudio Marketographer가 비정상 종료되었습니다.
+	Estudio Marketographer was closed while “{name}” had unsaved changes.	“{name}”의 변경 사항을 저장하지 않은 채 Estudio Marketographer가 닫혔습니다.
 	Filter	필터
 	Filter and EQ	필터 및 EQ
 	Filter Frequency	필터 주파수
@@ -1573,11 +1570,7 @@
 	Italian	이탈리아어
 	Japanese	일본어
 	JetBrains Mono	JetBrains Mono
-	Join the ArtCraft Discord	ArtCraft Discord 참여
-	Join the ArtCraft Discord (discord.gg/artcraft)	ArtCraft Discord 참여(discord.gg/artcraft)
-	Join the ArtCraft Discord…	ArtCraft Discord 참여…
 	Join Through Edits	통과 편집 결합
-	Join us on Discord	Discord 참여하기
 	JPEG	JPEG
 	JPEG Sequence	JPEG 시퀀스
 	just now	방금
@@ -2079,7 +2072,7 @@
 	not available in this session	이 세션에서 사용할 수 없음
 	Not matched yet	아직 일치 안 됨
 	Not Now	나중에
-	Not supported by FilmCraft's encoders yet	FilmCraft 인코더에서 아직 지원 안 됨
+	Not supported by Estudio Marketographer's encoders yet	Estudio Marketographer 인코더에서 아직 지원 안 됨
 	Not supported in FilmCraft yet	FilmCraft에서 아직 지원되지 않음
 	Notch 1	노치 1
 	Notch 2	노치 2
@@ -2404,7 +2397,7 @@
 	QuickTime, ProRes 4444 (4:4:4) with alpha channel, 24-bit 48 kHz PCM	QuickTime, ProRes 4444 (4:4:4) 알파 채널 포함, 24비트 48 kHz PCM
 	QuickTime, ProRes 4444 (4:4:4), 24-bit 48 kHz PCM	QuickTime, ProRes 4444 (4:4:4), 24비트 48 kHz PCM
 	QuickTime, ProRes 4444 XQ (4:4:4), 24-bit 48 kHz PCM	QuickTime, ProRes 4444 XQ (4:4:4), 24비트 48 kHz PCM
-	Quit FilmCraft	FilmCraft 종료
+	Quit Estudio Marketographer	Estudio Marketographer 종료
 	Radial	방사형
 	Radial Blur	방사형 흐림
 	Radial Ramp	방사형 램프
@@ -2651,7 +2644,7 @@
 	Save preset as:	사전 설정 저장 이름:
 	Save Preset…	사전 설정 저장…
 	Save Project	프로젝트 저장
-	Saved as a FilmCraft graphics template (.fcgt) in your templates folder.	템플릿 폴더에 FilmCraft 그래픽 템플릿(.fcgt)으로 저장했습니다.
+	Saved as a Estudio Marketographer graphics template (.fcgt) in your templates folder.	템플릿 폴더에 Estudio Marketographer 그래픽 템플릿(.fcgt)으로 저장했습니다.
 	Saved preset “{name}”	사전 설정 “{name}” 저장됨
 	Saved template {path}	템플릿 저장됨: {path}
 	Saves the view, columns, sort, thumbnail and font size.	보기, 열, 정렬, 썸네일, 글꼴 크기를 저장합니다.
@@ -3593,6 +3586,7 @@
 	Opens in your web browser: {url}	웹 브라우저에서 엽니다: {url}
 	Saves this session's log and shows it in your file manager.	이 세션의 로그를 저장하고 파일 관리자에서 보여 줍니다.
 	Shows a report on this computer.	이 컴퓨터에 대한 보고서를 보여 줍니다.
-	Shows the version, community links and credits in a FilmCraft window.	FilmCraft 창에 버전, 커뮤니티 링크, 제작진을 보여 줍니다.
+	Shows the version, community links and credits in a Estudio Marketographer window.	Estudio Marketographer 창에 버전, 커뮤니티 링크, 제작진을 보여 줍니다.
 	Couldn't open your web browser	웹 브라우저를 열 수 없습니다
 	Open this address in your browser yourself:	이 주소를 브라우저에서 직접 여세요:
+	A modified version of FilmCraft, by the ArtCraft team, based on its open-source code.	ArtCraft 팀의 FilmCraft를 바탕으로 수정한 버전이며, 오픈소스 코드를 기반으로 합니다.

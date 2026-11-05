@@ -679,7 +679,7 @@ fn export_dialog(app: &mut FilmcraftApp, ctx: &egui::Context) {
                     });
                 }
             });
-            ui.label(egui::RichText::new(tl!("Saved as a FilmCraft graphics template (.fcgt) in your templates folder.")).weak().size(11.0));
+            ui.label(egui::RichText::new(tl!("Saved as a Estudio Marketographer graphics template (.fcgt) in your templates folder.")).weak().size(11.0));
             if !d.error.is_empty() {
                 ui.colored_label(Color32::from_rgb(0xff, 0x80, 0x80), &d.error);
             }
