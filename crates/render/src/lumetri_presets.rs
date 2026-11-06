@@ -51,7 +51,7 @@ impl LumetriPreset {
 }
 
 /// The preset folders in Effects panel order.
-pub const FOLDERS: [&str; 4] = ["Cinematic", "Film Emulation", "Monochrome", "Technical"];
+pub const FOLDERS: [&str; 5] = ["Marketographer", "Cinematic", "Film Emulation", "Monochrome", "Technical"];
 
 fn fl(v: f64) -> ParamValue {
     ParamValue::Float(v)
@@ -72,6 +72,39 @@ fn curve(points: &[[f32; 2]]) -> ParamValue {
 pub fn presets() -> Vec<LumetriPreset> {
     let p = |folder, name, description, params| LumetriPreset { folder, name, description, params };
     vec![
+        // ---- Marketographer (the talking-head looks of Marketographer Studio)
+        p(
+            "Marketographer",
+            "Clean Talking Head",
+            "Slightly more contrast and colour for a face to camera",
+            vec![("contrast", fl(12.0)), ("saturation", fl(105.0)), ("vibrance", fl(10.0))],
+        ),
+        p(
+            "Marketographer",
+            "Punchy Talking Head",
+            "More contrast and colour with a soft dark vignette",
+            vec![
+                ("contrast", fl(25.0)),
+                ("saturation", fl(115.0)),
+                ("vignette_on", ParamValue::Bool(true)),
+                ("vignette_amount", fl(-1.5)),
+                ("vignette_midpoint", fl(45.0)),
+                ("vignette_feather", fl(60.0)),
+            ],
+        ),
+        p(
+            "Marketographer",
+            "Dark Frame for Titles",
+            "Darker picture with a strong vignette so text stays readable",
+            vec![
+                ("exposure", fl(-0.3)),
+                ("contrast", fl(15.0)),
+                ("vignette_on", ParamValue::Bool(true)),
+                ("vignette_amount", fl(-2.5)),
+                ("vignette_midpoint", fl(40.0)),
+                ("vignette_feather", fl(65.0)),
+            ],
+        ),
         // ---- Cinematic
         p(
             "Cinematic",
