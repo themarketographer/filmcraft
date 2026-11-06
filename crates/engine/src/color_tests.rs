@@ -200,7 +200,7 @@ fn lumetri_presets_list_apply_and_thumbnails() {
     let mut s = demo();
     let clip = pick_clip(&mut s);
     let r = s.execute("lumetri.presets", json!({})).unwrap();
-    assert_eq!(r["folders"], json!(["Cinematic", "Film Emulation", "Monochrome", "Technical"]));
+    assert_eq!(r["folders"], json!(["Marketographer", "Cinematic", "Film Emulation", "Monochrome", "Technical"]));
     let mono = s.execute("lumetri.presets", json!({"folder": "monochrome"})).unwrap();
     assert!(mono["presets"].as_array().unwrap().iter().all(|p| p["folder"] == "Monochrome"));
     // apply: one undo step adding a configured Lumetri Color before the intrinsic effects

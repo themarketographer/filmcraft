@@ -3585,3 +3585,7 @@
 	Dark Frame for Titles	标题用暗画面
 	Darker picture with a strong vignette so text stays readable	画面更暗并加入明显暗角，让文字清晰易读
 	Marketographer	Marketographer
+	Zoom Punch In	快速推近
+	Scale 100 → 115 % in a quarter of a second, then holds	0.25 秒内缩放从 100% 到 115%，然后保持
+	Zoom Slow Push	缓慢推近
+	Scale 100 → 104 % slowly over the whole clip	在整个片段中缓慢从 100% 缩放到 104%
