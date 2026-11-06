@@ -93,6 +93,10 @@ pub struct CaptionStyle {
     /// Text outline width in pixels at 1080 lines (0 = none).
     pub outline: f32,
     pub outline_color: [u8; 4],
+    /// Colour of the word being spoken, sRGB + alpha (None = all words share `color`). The time of
+    /// the caption is shared between its words in proportion to their length.
+    #[serde(default)]
+    pub active_color: Option<[u8; 4]>,
 }
 
 impl Default for CaptionStyle {
@@ -109,6 +113,7 @@ impl Default for CaptionStyle {
             line_spacing: 1.25,
             outline: 0.0,
             outline_color: [0, 0, 0, 255],
+            active_color: None,
         }
     }
 }

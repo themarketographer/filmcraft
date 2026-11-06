@@ -104,8 +104,33 @@ fn vtt_overrides(settings: &str) -> (Option<f32>, Option<CaptionAlign>) {
     (line, align)
 }
 
-/// Lay out and rasterise one caption for a `w`×`h` frame.
+/// Index (over all words, in reading order) of the word spoken `f` of the way through a caption:
+/// the caption's time is shared between its words by length.
+fn active_word(lines: &[String], f: f64) -> Option<usize> {
+    let sizes: Vec<usize> = lines.iter().flat_map(|l| l.split(' ').filter(|x| !x.is_empty()).map(|x| x.chars().count())).collect();
+    let total: usize = sizes.iter().sum();
+    if total == 0 {
+        return None;
+    }
+    let target = f.clamp(0.0, 1.0) * total as f64;
+    let mut acc = 0.0;
+    for (i, n) in sizes.iter().enumerate() {
+        acc += *n as f64;
+        if target < acc {
+            return Some(i);
+        }
+    }
+    Some(sizes.len() - 1)
+}
+
+/// Lay out and rasterise one caption for a `w`×`h` frame (every word in the same colour).
 pub fn render_caption(c: &Caption, style: &CaptionStyle, w: usize, h: usize) -> Option<Overlay> {
+    render_caption_at(c, style, w, h, None)
+}
+
+/// [`render_caption`] at timeline time `t`: with `style.active_color` set, the word being spoken at
+/// `t` is drawn in that colour.
+pub fn render_caption_at(c: &Caption, style: &CaptionStyle, w: usize, h: usize, t: Option<Tick>) -> Option<Overlay> {
     if w == 0 || h == 0 {
         return None;
     }
@@ -158,6 +183,12 @@ pub fn render_caption(c: &Caption, style: &CaptionStyle, w: usize, h: usize) -> 
     let ow = (bx1 - bx0).max(1.0) as usize;
     let oh = (by1 - by0).max(1.0) as usize;
     let mut cover = vec![0.0f32; ow * oh];
+    let mut act = vec![0.0f32; ow * oh];
+    let active = match (style.active_color, t) {
+        (Some(_), Some(t)) => active_word(&lines, (t.0 - c.start.0) as f64 / c.duration.0.max(1) as f64),
+        _ => None,
+    };
+    let mut word_no = 0usize;
     let mut bg = vec![0.0f32; ow * oh];
     for (i, line) in lines.iter().enumerate() {
         let lt = top + lh * i as f32;
@@ -174,13 +205,34 @@ pub fn render_caption(c: &Caption, style: &CaptionStyle, w: usize, h: usize) -> 
             }
         }
         let baseline = lt + (lh - (asc + desc)) / 2.0 + asc;
-        let l = layout(line, &ts, &ParagraphStyle::default());
-        let mut m = filmcraft_text::Mask { w: ow, h: oh, a: std::mem::take(&mut cover) };
-        render::draw(&l, &render::at(xs[i], baseline.round()), &mut m, (ox, oy));
-        cover = m.a;
+        let draw = |buf: &mut Vec<f32>, text: &str, x: f32| {
+            let l = layout(text, &ts, &ParagraphStyle::default());
+            let mut m = filmcraft_text::Mask { w: ow, h: oh, a: std::mem::take(buf) };
+            render::draw(&l, &render::at(x, baseline.round()), &mut m, (ox, oy));
+            *buf = m.a;
+        };
+        if active.is_none() {
+            draw(&mut cover, line, xs[i]);
+            continue;
+        }
+        // word by word, so the spoken one can take another colour; a word starts where the text
+        // before it, plus a space, ends
+        let mut before = String::new();
+        for word in line.split(' ').filter(|x| !x.is_empty()) {
+            let off = if before.is_empty() { 0.0 } else { filmcraft_text::measure(&format!("{before} {word}"), &ts) - filmcraft_text::measure(word, &ts) };
+            draw(if Some(word_no) == active { &mut act } else { &mut cover }, word, xs[i] + off);
+            before = if before.is_empty() { word.to_string() } else { format!("{before} {word}") };
+            word_no += 1;
+        }
     }
-    let stroke = if outline > 0.0 { dilate(&cover, ow, oh, outline) } else { Vec::new() };
+    let stroke = if outline > 0.0 {
+        let all: Vec<f32> = cover.iter().zip(&act).map(|(a, b)| a.max(*b)).collect();
+        dilate(&all, ow, oh, outline)
+    } else {
+        Vec::new()
+    };
     let (tc, bc, oc) = (lin(style.color), lin(style.background_color), lin(style.outline_color));
+    let ac = style.active_color.map_or(tc, lin);
     let mut out = vec![0.0f32; ow * oh * 4];
     for j in 0..ow * oh {
         let mut p = [0.0f32; 4];
@@ -196,6 +248,7 @@ pub fn render_caption(c: &Caption, style: &CaptionStyle, w: usize, h: usize) -> 
             over(&mut p, oc, stroke[j]);
         }
         over(&mut p, tc, cover[j]);
+        over(&mut p, ac, act[j]);
         out[j * 4..j * 4 + 4].copy_from_slice(&p);
     }
     Some(Overlay { x: ox, y: oy, w: ow, h: oh, px: out })
@@ -235,7 +288,7 @@ pub fn track_overlay(track: &CaptionTrack, t: Tick, w: usize, h: usize) -> Optio
         return None;
     }
     let c = track.caption_at(t)?;
-    render_caption(c, &track.style, w, h)
+    render_caption_at(c, &track.style, w, h, Some(t))
 }
 
 /// Overlays of every visible caption track of a sequence at `t`, bottom track first.
@@ -331,5 +384,36 @@ mod tests {
         assert!(track_overlay(&t, Tick(5), 100, 100).is_some());
         t.enabled = false;
         assert!(track_overlay(&t, Tick(5), 100, 100).is_none());
+    }
+
+    #[test]
+    fn the_spoken_word_takes_the_active_colour() {
+        let st = CaptionStyle { background: false, active_color: Some([255, 0, 0, 255]), ..Default::default() };
+        let c = cap("one two");
+        // centre of the red (spoken-word) pixels, and how many white ones there are
+        let red = |t: i64| {
+            let o = render_caption_at(&c, &st, 1920, 1080, Some(Tick(t))).unwrap();
+            let (mut n, mut sx, mut white) = (0usize, 0usize, 0usize);
+            for (i, p) in o.px.chunks(4).enumerate() {
+                if p[0] > 0.2 && p[1] < 0.01 {
+                    n += 1;
+                    sx += i % o.w;
+                } else if p[1] > 0.2 {
+                    white += 1;
+                }
+            }
+            (n, sx / n.max(1), white)
+        };
+        let (n0, x0, w0) = red(0);
+        let (n1, x1, w1) = red(99);
+        assert!(n0 > 0 && n1 > 0 && w0 > 0 && w1 > 0, "red and white both drawn: {n0} {n1} {w0} {w1}");
+        assert!(x1 > x0 + 50, "the red word moves right as the caption plays: {x0} -> {x1}");
+        // without an active colour (or without a time) nothing changes
+        let plain = render_caption(&c, &CaptionStyle { background: false, ..Default::default() }, 1920, 1080).unwrap();
+        let at = render_caption_at(&c, &CaptionStyle { background: false, ..Default::default() }, 1920, 1080, Some(Tick(0))).unwrap();
+        assert_eq!(plain, at);
+        assert_eq!(active_word(&["one two".to_string()], 0.0), Some(0));
+        assert_eq!(active_word(&["one two".to_string()], 1.0), Some(1));
+        assert_eq!(active_word(&[], 0.5), None);
     }
 }

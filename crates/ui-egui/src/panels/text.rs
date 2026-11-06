@@ -450,6 +450,22 @@ fn style_strip(app: &mut FilmcraftApp, ui: &mut egui::Ui, r: Rect, track_idx: us
             let c = col.to_srgba_unmultiplied();
             actions.push(("captions.setStyle".into(), json!({"track": tr.id.0, "color": c})));
         }
+        let mut word_on = st.active_color.is_some();
+        let resp = ui.checkbox(&mut word_on, tl!("Active word"));
+        app.auto.add("text.captions.style.activeWord", resp.rect, "Highlight the spoken word");
+        if resp.changed() {
+            // on: the Marketographer yellow; off: back to one colour
+            let v = if word_on { json!("#fddc5b") } else { json!("") };
+            actions.push(("captions.setStyle".into(), json!({"track": tr.id.0, "activeColor": v})));
+        }
+        if let Some(a) = st.active_color {
+            let mut col = Color32::from_rgba_unmultiplied(a[0], a[1], a[2], a[3]);
+            let resp = egui::color_picker::color_edit_button_srgba(ui, &mut col, egui::color_picker::Alpha::Opaque);
+            app.auto.add("text.captions.style.activeColor", resp.rect, "Active word colour");
+            if resp.changed() {
+                actions.push(("captions.setStyle".into(), json!({"track": tr.id.0, "activeColor": col.to_srgba_unmultiplied()})));
+            }
+        }
         let mut bg = st.background;
         let resp = ui.checkbox(&mut bg, tl!("Box"));
         app.auto.add("text.captions.style.background", resp.rect, "Background box");

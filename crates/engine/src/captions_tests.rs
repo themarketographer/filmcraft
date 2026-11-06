@@ -132,6 +132,12 @@ fn caption_commands_need_tracks_and_navigate() {
     let st = &s.active_sequence().unwrap().caption_tracks[0].style;
     assert_eq!(st.color, [255, 255, 0, 255]);
     assert!(s.execute("captions.setStyle", json!({"anchor": "sideways"})).is_err());
+    // spoken-word colour: set, kept by other style edits, cleared with ""
+    s.execute("captions.setStyle", json!({"activeColor": "#fddc5b"})).unwrap();
+    s.execute("captions.setStyle", json!({"size": 44})).unwrap();
+    assert_eq!(s.active_sequence().unwrap().caption_tracks[0].style.active_color, Some([0xfd, 0xdc, 0x5b, 255]));
+    s.execute("captions.setStyle", json!({"activeColor": ""})).unwrap();
+    assert_eq!(s.active_sequence().unwrap().caption_tracks[0].style.active_color, None);
     s.execute("captions.setTimes", json!({"caption": id.0, "startSeconds": 0.5, "endSeconds": 2.5})).unwrap();
     assert!(s.execute("captions.setTimes", json!({"caption": id.0, "endSeconds": 3.5})).is_err(), "would overlap `two`");
     s.execute("captions.deleteTrack", json!({"track": "C1"})).unwrap();
