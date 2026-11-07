@@ -3590,3 +3590,7 @@
 	Zoom Slow Push	缓慢推近
 	Scale 100 → 104 % slowly over the whole clip	在整个片段中缓慢从 100% 缩放到 104%
 	Active word	当前词
+	Soft Bloom	柔和泛光
+	Soft glow on the bright parts of the picture	为画面的明亮部分添加柔和的光晕
+	Dark Top and Bottom	上下压暗
+	Darkens the top and bottom edges so titles and captions stay readable	压暗画面上下边缘，让标题和字幕更易读

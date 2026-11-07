@@ -257,3 +257,21 @@ fn export_and_import_go_through_host_services() {
     assert_eq!(s2.presets.user.len(), 1);
     assert!(s2.execute("presets.import", json!({"path": "/exports/missing.prfpset"})).is_err());
 }
+
+/// "Dark Top and Bottom" darkens the frame edges and leaves the middle alone; "Soft Bloom" applies.
+#[test]
+fn marketographer_shade_darkens_the_edges_only() {
+    let (mut s, clips) = demo();
+    let row = |img: &filmcraft_render::Image, fy: f32| {
+        let (w, h) = (img.w, img.h);
+        let y = ((h as f32 * fy) as usize).min(h - 1);
+        (0..w).map(|x| img.px[(y * w + x) * 4..(y * w + x) * 4 + 3].iter().sum::<f32>()).sum::<f32>() / w as f32
+    };
+    let before = s.render_program(0.25).unwrap();
+    s.execute("presets.apply", json!({"preset": "Dark Top and Bottom", "clips": [clips[0].0]})).unwrap();
+    let after = s.render_program(0.25).unwrap();
+    assert!(row(&after, 0.97) < row(&before, 0.97) * 0.8, "bottom edge darker: {} -> {}", row(&before, 0.97), row(&after, 0.97));
+    assert!((row(&after, 0.5) - row(&before, 0.5)).abs() < row(&before, 0.5) * 0.05 + 0.005, "middle unchanged");
+    s.execute("presets.apply", json!({"preset": "Soft Bloom", "clips": [clips[0].0]})).unwrap();
+    assert!(item(&s, clips[0]).effect("wonder_glow").is_some());
+}

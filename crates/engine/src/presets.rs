@@ -225,6 +225,18 @@ pub fn builtin_presets() -> Vec<EffectPreset> {
     animate(&mut punch, "scale", vec![kf(0.0, f(100.0)), kf(0.25, f(115.0))]);
     let mut push = effect("motion", &[]);
     animate(&mut push, "scale", vec![kf(0.0, f(100.0)), kf(10.0, f(104.0))]);
+    // bloom: soft glow on the bright parts (Marketographer Studio's `bloom`)
+    let bloom = effect("wonder_glow", &[("threshold", f(70.0)), ("radius", f(120.0)), ("intensity", f(60.0)), ("mode", ParamValue::Choice(1))]);
+    // dark ramps at the bottom and top so text reads over bright backgrounds (`degradado`): a
+    // brightness drop inside a feathered strip that runs past the frame edge
+    let strip = |brightness: f64, y0: f64, y1: f64, feather: f64| {
+        let mut e = effect("brightness_contrast", &[("brightness", f(brightness))]);
+        let mut m = Mask::new("Mask (1)", MaskPath::rect(-200.0, y0, 2120.0, y1));
+        m.feather.value = f(feather);
+        e.masks.push(m);
+        e
+    };
+    let shade = vec![strip(-55.0, 700.0, 1300.0, 260.0), strip(-35.0, -300.0, 240.0, 160.0)];
     let mut pip = effect("motion", &[("scale", f(35.0)), ("position", ParamValue::Vec2(Vec2::new(1530.0, 270.0)))]);
     pip.enabled = true;
     vec![
@@ -235,6 +247,8 @@ pub fn builtin_presets() -> Vec<EffectPreset> {
         preset("Mosaic In", "Large blocks resolving to the picture over the first second", KeyframeMode::AnchorToIn, 10.0, vec![mosaic_in]),
         preset("Zoom Punch In", "Scale 100 → 115 % in a quarter of a second, then holds", KeyframeMode::AnchorToIn, 10.0, vec![punch]),
         preset("Zoom Slow Push", "Scale 100 → 104 % slowly over the whole clip", KeyframeMode::Scale, 10.0, vec![push]),
+        preset("Soft Bloom", "Soft glow on the bright parts of the picture", KeyframeMode::Scale, 10.0, vec![bloom]),
+        preset("Dark Top and Bottom", "Darkens the top and bottom edges so titles and captions stay readable", KeyframeMode::Scale, 10.0, shade),
         preset("Soft Vignette", "Darkens outside a feathered oval mask", KeyframeMode::Scale, 10.0, vec![vignette]),
         preset("Spotlight", "Brightens inside a feathered circular mask", KeyframeMode::Scale, 10.0, vec![spotlight]),
         preset("Warm Tint", "Warm highlights, brown shadows", KeyframeMode::Scale, 10.0, vec![warm]),
