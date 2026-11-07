@@ -388,8 +388,8 @@ fn remove_ranges(s: &mut Session, label: &str, ranges: Vec<TimeRange>) -> Result
 
 fn remove_pauses(s: &mut Session, p: &Value) -> Result<Value> {
     let words = sequence_words(s);
-    let min = Tick::from_seconds_f64(f64_p(p, "minSeconds").unwrap_or(1.0));
-    let keep = Tick::from_seconds_f64(f64_p(p, "keepSeconds").unwrap_or(0.15));
+    let min = Tick::from_seconds_f64(f64_p(p, "minSeconds").unwrap_or(0.4));
+    let keep = Tick::from_seconds_f64(f64_p(p, "keepSeconds").unwrap_or(0.1));
     let ranges = tx::find_pauses(&words, min, keep, s.sequence_rate());
     remove_ranges(s, "Remove Pauses", ranges)
 }
