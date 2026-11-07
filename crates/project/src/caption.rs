@@ -97,6 +97,9 @@ pub struct CaptionStyle {
     /// the caption is shared between its words in proportion to their length.
     #[serde(default)]
     pub active_color: Option<[u8; 4]>,
+    /// Font style within the family (`Regular`, `Medium`, `SemiBold`, `Bold Italic`…), resolved
+    /// like graphic text: the nearest weight when the family has no face of that name.
+    pub font_style: String,
 }
 
 impl Default for CaptionStyle {
@@ -114,6 +117,7 @@ impl Default for CaptionStyle {
             outline: 0.0,
             outline_color: [0, 0, 0, 255],
             active_color: None,
+            font_style: "SemiBold".into(),
         }
     }
 }
@@ -248,25 +252,36 @@ pub fn plain_text(s: &str) -> String {
     while let Some(c) = chars.next() {
         match c {
             '<' => {
-                // a tag runs to the next '>' (if none, keep the '<' literally)
-                let rest: String = chars.clone().collect();
-                if let Some(end) = rest.find('>') {
-                    for _ in 0..rest[..=end].chars().count() {
-                        chars.next();
+                // A tag runs to the next '>'.  Scan forward once; preserving an unterminated
+                // tag as literal text must not rescan every later opening bracket.
+                let mut literal = String::new();
+                let mut closed = false;
+                for next in chars.by_ref() {
+                    if next == '>' {
+                        closed = true;
+                        break;
                     }
-                } else {
+                    literal.push(next);
+                }
+                if !closed {
                     out.push('<');
+                    out.push_str(&literal);
                 }
             }
             '{' if chars.peek() == Some(&'\\') => {
                 // SSA-style override blocks some SRT files carry: {\an8}
-                let rest: String = chars.clone().collect();
-                if let Some(end) = rest.find('}') {
-                    for _ in 0..rest[..=end].chars().count() {
-                        chars.next();
+                let mut literal = String::new();
+                let mut closed = false;
+                for next in chars.by_ref() {
+                    if next == '}' {
+                        closed = true;
+                        break;
                     }
-                } else {
+                    literal.push(next);
+                }
+                if !closed {
                     out.push('{');
+                    out.push_str(&literal);
                 }
             }
             '&' => {
@@ -302,11 +317,28 @@ mod tests {
     use super::*;
 
     #[test]
+    fn styles_saved_without_a_font_style_load_semibold() {
+        let old = r#"{"font":"Inter","size":54.0,"color":[255,255,255,255],"background":true,"background_color":[0,0,0,191],
+            "align":"Center","anchor":"Bottom","margin":0.08,"line_spacing":1.25,"outline":0.0,"outline_color":[0,0,0,255]}"#;
+        let st: CaptionStyle = serde_json::from_str(old).unwrap();
+        assert_eq!(st, CaptionStyle::default());
+        assert_eq!(st.font_style, "SemiBold");
+    }
+
+    #[test]
     fn plain() {
         assert_eq!(plain_text("<i>Hello</i> &amp; <b>bye</b>"), "Hello & bye");
         assert_eq!(plain_text("{\\an8}Top"), "Top");
         assert_eq!(plain_text("a < b"), "a < b");
         assert_eq!(plain_text("<v Bob>Hi</v>"), "Hi");
+    }
+
+    #[test]
+    fn malformed_caption_markup_is_preserved_without_repeated_suffix_scans() {
+        let angle = "<".repeat(10_000);
+        let ssa = format!("{{\\{}", "{".repeat(10_000));
+        assert_eq!(plain_text(&angle), angle);
+        assert_eq!(plain_text(&ssa), ssa);
     }
 
     #[test]
