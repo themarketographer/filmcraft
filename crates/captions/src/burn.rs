@@ -206,7 +206,6 @@ pub fn render_caption_at(c: &Caption, style: &CaptionStyle, w: usize, h: usize, 
         return None;
     }
     let mut cover = vec![0.0f32; ow * oh];
-    let mut act = vec![0.0f32; ow * oh];
     let active = match (style.active_color, t) {
         (Some(_), Some(t)) => {
             let n = lines.iter().flat_map(|l| l.split(' ')).filter(|x| !x.is_empty()).count();
@@ -218,6 +217,8 @@ pub fn render_caption_at(c: &Caption, style: &CaptionStyle, w: usize, h: usize, 
         }
         _ => None,
     };
+    // the spoken word's own layer, only when there is one
+    let mut act = if active.is_some() { vec![0.0f32; ow * oh] } else { Vec::new() };
     let mut word_no = 0usize;
     let mut bg = vec![0.0f32; ow * oh];
     for (i, line) in lines.iter().enumerate() {
@@ -256,8 +257,12 @@ pub fn render_caption_at(c: &Caption, style: &CaptionStyle, w: usize, h: usize, 
         }
     }
     let stroke = if outline > 0.0 {
-        let all: Vec<f32> = cover.iter().zip(&act).map(|(a, b)| a.max(*b)).collect();
-        dilate(&all, ow, oh, outline)
+        if act.is_empty() {
+            dilate(&cover, ow, oh, outline)
+        } else {
+            let all: Vec<f32> = cover.iter().zip(&act).map(|(a, b)| a.max(*b)).collect();
+            dilate(&all, ow, oh, outline)
+        }
     } else {
         Vec::new()
     };
@@ -278,7 +283,7 @@ pub fn render_caption_at(c: &Caption, style: &CaptionStyle, w: usize, h: usize, 
             over(&mut p, oc, stroke[j]);
         }
         over(&mut p, tc, cover[j]);
-        over(&mut p, ac, act[j]);
+        over(&mut p, ac, act.get(j).copied().unwrap_or(0.0));
         out[j * 4..j * 4 + 4].copy_from_slice(&p);
     }
     Some(Overlay { x: ox, y: oy, w: ow, h: oh, px: out })
