@@ -3625,3 +3625,10 @@
 	Big white title at the top of the frame with a yellow rule and a soft shadow.	フレーム上部に、黄色の線とやわらかな影を添えた大きな白いタイトルを表示します。
 	Big white title at the centre of the frame with a yellow rule and a soft shadow.	フレーム中央に、黄色の線とやわらかな影を添えた大きな白いタイトルを表示します。
 	Big white title at the bottom of the frame with a yellow rule and a soft shadow.	フレーム下部に、黄色の線とやわらかな影を添えた大きな白いタイトルを表示します。
+	Pro vs Noob	Pro vs Noob
+	Two labels over a split screen, one per half, with a yellow dividing line.	分割画面の左右に1つずつラベルを表示し、黄色の区切り線を添えます。
+	Left Label	左のラベル
+	Right Label	右のラベル
+	Left Color	左の色
+	Right Color	右の色
+	Line Color	線の色

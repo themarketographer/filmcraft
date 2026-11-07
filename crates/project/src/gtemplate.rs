@@ -728,6 +728,36 @@ pub fn builtin_templates() -> Vec<GraphicsTemplate> {
         t.author = "Pablo Villarroel / The Marketographer".into();
         v.push(t);
     }
+    // Marketographer: split-screen labels for "Pro vs Noob" comparisons (one clip on each half).
+    let mut pro = text(1, "Pro", "PRO", (480.0, 90.0), 110.0, "Bold");
+    set(&mut pro, "fill_color", rgb(0xfddc5b));
+    let mut noob = text(2, "Noob", "NOOB", (1440.0, 90.0), 110.0, "Bold");
+    set(&mut noob, "fill_color", rgb(0xffffff));
+    for l in [&mut pro, &mut noob] {
+        set(l, "align", ParamValue::Choice(1));
+        set(l, "shadow", ParamValue::Bool(true));
+        set(l, "shadow_distance", ParamValue::Float(5.0));
+        set(l, "shadow_blur", ParamValue::Float(20.0));
+        set(l, "shadow_opacity", ParamValue::Float(70.0));
+    }
+    let divider = shape(3, "Divider", 0, (960.0, 540.0), (6.0, 1080.0), 0xfddc5b);
+    let mut t = builtin(
+        "marketographer-pro-vs-noob",
+        "Pro vs Noob",
+        "Marketographer",
+        "Two labels over a split screen, one per half, with a yellow dividing line.",
+        5,
+        vec![pro, noob, divider],
+        vec![
+            ctl("pro", "Left Label", 1, "text"),
+            ctl("noob", "Right Label", 2, "text"),
+            ctl("pro_color", "Left Color", 1, "fill_color"),
+            ctl("noob_color", "Right Color", 2, "fill_color"),
+            ctl("line", "Line Color", 3, "fill_color"),
+        ],
+    );
+    t.author = "Pablo Villarroel / The Marketographer".into();
+    v.push(t);
     v
 }
 
