@@ -408,7 +408,7 @@ pub fn caption_blocks(words: &[SeqWord], rules: &CaptionRules, rate: FrameRate) 
 }
 
 /// Caption blocks as captions (ids from `ctx`).
-pub fn blocks_to_captions(blocks: &[CaptionBlock], ctx: &mut EditCtx) -> Vec<Caption> {
+pub fn blocks_to_captions(blocks: &[CaptionBlock], words: &[SeqWord], ctx: &mut EditCtx) -> Vec<Caption> {
     blocks
         .iter()
         .map(|b| Caption {
@@ -419,6 +419,7 @@ pub fn blocks_to_captions(blocks: &[CaptionBlock], ctx: &mut EditCtx) -> Vec<Cap
             speaker: b.speaker.clone(),
             cue_id: None,
             settings: String::new(),
+            word_times: words.get(b.words.clone()).unwrap_or_default().iter().map(|w| (w.start.max(b.start) - b.start, w.end.max(b.start) - b.start)).collect(),
         })
         .collect()
 }

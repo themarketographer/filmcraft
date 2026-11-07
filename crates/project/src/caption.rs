@@ -136,6 +136,10 @@ pub struct Caption {
     /// WebVTT cue settings (`line:90% align:start`…), kept verbatim.
     #[serde(default)]
     pub settings: String,
+    /// (start, end) of each word of `text`, as offsets from `start`, when known (captions made from
+    /// a transcript). Used to colour the spoken word; ignored when it doesn't match the text.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub word_times: Vec<(Tick, Tick)>,
 }
 
 impl Caption {
@@ -317,6 +321,7 @@ mod tests {
                 speaker: None,
                 cue_id: None,
                 settings: String::new(),
+                word_times: Vec::new(),
             });
         }
         assert_eq!(t.caption_at(Tick(120)).unwrap().text, "c1");
@@ -338,6 +343,7 @@ mod tests {
                 speaker: None,
                 cue_id: None,
                 settings: String::new(),
+                word_times: Vec::new(),
             });
         }
         let result = std::panic::catch_unwind(|| track.check());

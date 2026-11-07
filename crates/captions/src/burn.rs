@@ -123,6 +123,12 @@ fn active_word(lines: &[String], f: f64) -> Option<usize> {
     Some(sizes.len() - 1)
 }
 
+/// The word spoken `off` after the caption's start, from the words' own times: the last one that
+/// has begun (so a pause keeps the previous word lit).
+fn timed_word(times: &[(Tick, Tick)], off: Tick) -> usize {
+    times.iter().rposition(|(start, _)| *start <= off).unwrap_or(0)
+}
+
 /// Lay out and rasterise one caption for a `w`×`h` frame (every word in the same colour).
 pub fn render_caption(c: &Caption, style: &CaptionStyle, w: usize, h: usize) -> Option<Overlay> {
     render_caption_at(c, style, w, h, None)
@@ -185,7 +191,14 @@ pub fn render_caption_at(c: &Caption, style: &CaptionStyle, w: usize, h: usize, 
     let mut cover = vec![0.0f32; ow * oh];
     let mut act = vec![0.0f32; ow * oh];
     let active = match (style.active_color, t) {
-        (Some(_), Some(t)) => active_word(&lines, (t.0 - c.start.0) as f64 / c.duration.0.max(1) as f64),
+        (Some(_), Some(t)) => {
+            let n = lines.iter().flat_map(|l| l.split(' ')).filter(|x| !x.is_empty()).count();
+            if c.word_times.len() == n && n > 0 {
+                Some(timed_word(&c.word_times, Tick(t.0 - c.start.0)))
+            } else {
+                active_word(&lines, (t.0 - c.start.0) as f64 / c.duration.0.max(1) as f64)
+            }
+        }
         _ => None,
     };
     let mut word_no = 0usize;
@@ -302,7 +315,16 @@ mod tests {
     use filmcraft_project::{CaptionFormat, ClipId, TrackId};
 
     fn cap(text: &str) -> Caption {
-        Caption { id: ClipId(1), start: Tick(0), duration: Tick(100), text: text.into(), speaker: None, cue_id: None, settings: String::new() }
+        Caption {
+            id: ClipId(1),
+            start: Tick(0),
+            duration: Tick(100),
+            text: text.into(),
+            speaker: None,
+            cue_id: None,
+            settings: String::new(),
+            word_times: Vec::new(),
+        }
     }
 
     #[test]
@@ -415,5 +437,32 @@ mod tests {
         assert_eq!(active_word(&["one two".to_string()], 0.0), Some(0));
         assert_eq!(active_word(&["one two".to_string()], 1.0), Some(1));
         assert_eq!(active_word(&[], 0.5), None);
+    }
+
+    #[test]
+    fn real_word_times_beat_the_proportional_guess() {
+        let st = CaptionStyle { background: false, active_color: Some([255, 0, 0, 255]), ..Default::default() };
+        let mut c = cap("one two three");
+        let red_x = |c: &Caption, t: i64| {
+            let o = render_caption_at(c, &st, 1920, 1080, Some(Tick(t))).unwrap();
+            let (mut n, mut sx) = (0usize, 0usize);
+            for (i, p) in o.px.chunks(4).enumerate() {
+                if p[0] > 0.2 && p[1] < 0.01 {
+                    n += 1;
+                    sx += i % o.w;
+                }
+            }
+            sx / n.max(1)
+        };
+        let guess = red_x(&c, 50); // by length, the middle word
+        // "one" is spoken for most of the caption, "two" and "three" only at the end
+        c.word_times = vec![(Tick(0), Tick(80)), (Tick(80), Tick(90)), (Tick(90), Tick(100))];
+        let timed = red_x(&c, 50);
+        assert!(timed + 50 < guess, "the first word is lit at 50: {timed} vs {guess}");
+        assert!(red_x(&c, 95) > guess, "the last word is lit at 95");
+        // times that don't match the text are ignored
+        c.word_times.pop();
+        assert_eq!(red_x(&c, 50), guess);
+        assert_eq!(timed_word(&[(Tick(0), Tick(5)), (Tick(10), Tick(15))], Tick(7)), 0, "a pause keeps the previous word");
     }
 }

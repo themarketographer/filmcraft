@@ -5,7 +5,7 @@ use serde_json::json;
 use crate::Session;
 use filmcraft_project::{ItemId, Transcript, Word};
 use filmcraft_speech::FixedTranscriber;
-use filmcraft_time::Tick;
+use filmcraft_time::{TICKS_PER_SECOND, Tick};
 
 /// The demo project with a fake transcriber whose transcript fits the first A1 clip's media:
 /// "Hello um world." (Speaker 1), a 1.2 s pause, "Second speaker here." (Speaker 2).
@@ -124,6 +124,12 @@ fn remove_fillers_pauses_and_create_captions() {
     let q = s.active_sequence().unwrap();
     let tr = &q.caption_tracks[0];
     assert_eq!(tr.captions[0].text, "Hello world.");
+    // every word keeps its own time, as offsets from the caption's start, in order
+    for c in &tr.captions {
+        assert_eq!(c.word_times.len(), c.text.split_whitespace().count(), "{}", c.text);
+        assert!(c.word_times.iter().all(|(a, b)| *a >= Tick(0) && a <= b && *b <= c.duration + Tick(TICKS_PER_SECOND)), "{:?}", c.word_times);
+        assert!(c.word_times.windows(2).all(|w| w[0].0 <= w[1].0));
+    }
     assert_eq!(tr.captions[1].speaker.as_deref(), Some("Speaker 2"));
     q.check().unwrap();
 }

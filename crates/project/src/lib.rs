@@ -2014,6 +2014,7 @@ mod tests {
             speaker: Some("Ann".into()),
             cue_id: Some("1".into()),
             settings: "line:90%".into(),
+            word_times: Vec::new(),
         });
         p.sequence_mut(seq).unwrap().caption_tracks.push(ct);
         let q = Project::from_json(&p.to_json()).unwrap();
