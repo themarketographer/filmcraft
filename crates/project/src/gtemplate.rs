@@ -697,6 +697,37 @@ pub fn builtin_templates() -> Vec<GraphicsTemplate> {
         t.graphic.roll = Roll { mode: RollMode::CrawlLeft, start_off_screen: true, end_off_screen: true, ..Default::default() };
         v.push(t);
     }
+    // Marketographer: a big title (and optional small line) at the top, centre or bottom of the
+    // frame, white with a yellow rule and a soft shadow, for talking-head videos.
+    for (key, name, label, y) in
+        [("top", "Title – Top", "top", 250.0), ("center", "Title – Center", "centre", 540.0), ("bottom", "Title – Bottom", "bottom", 830.0)]
+    {
+        let mut title = text(1, "Title", "TU TÍTULO AQUÍ", (960.0, y), 120.0, "Bold");
+        set(&mut title, "align", ParamValue::Choice(1));
+        set(&mut title, "fill_color", rgb(0xffffff));
+        set(&mut title, "shadow", ParamValue::Bool(true));
+        set(&mut title, "shadow_distance", ParamValue::Float(6.0));
+        set(&mut title, "shadow_blur", ParamValue::Float(24.0));
+        set(&mut title, "shadow_opacity", ParamValue::Float(70.0));
+        let rule = shape(2, "Rule", 0, (960.0, y + 84.0), (240.0, 8.0), 0xfddc5b);
+        let mut t = builtin(
+            &format!("marketographer-title-{key}"),
+            name,
+            "Marketographer",
+            &format!("Big white title at the {label} of the frame with a yellow rule and a soft shadow."),
+            5,
+            vec![title, rule],
+            vec![
+                ctl("title", "Title", 1, "text"),
+                slider("title_size", "Title Size", 1, "size", 40.0, 260.0),
+                ctl("title_color", "Title Color", 1, "fill_color"),
+                ctl("accent", "Accent Color", 2, "fill_color"),
+                ctl("font", "Font", 1, "font"),
+            ],
+        );
+        t.author = "Pablo Villarroel / The Marketographer".into();
+        v.push(t);
+    }
     v
 }
 
