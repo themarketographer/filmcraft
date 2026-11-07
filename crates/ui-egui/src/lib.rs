@@ -12,6 +12,9 @@
 pub const UPDATE_APP: craft_update::app::App = craft_update::app::App {
     icon_png: Some(include_bytes!("../../../assets/app-icon/hicolor/128x128/apps/com.themarketographer.estudio.png")),
     accent: Some([0x8b, 0x5c, 0xf6]),
+    name: "Estudio Marketographer",
+    repo: "themarketographer/filmcraft",
+    developer: "The Marketographer",
     ..craft_update::suite::FILMCRAFT
 };
 
